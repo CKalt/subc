@@ -15,11 +15,12 @@ struct MakeCookie {
 enum Command {
     /// Pound acorns into flour for cookie dough.
     Pound {
+        /// <acorns> is expressed as a numeric integer
         acorns: u32,
     },
     /// Add magical sparkles -- the secret ingredient!
     Sparkle {
-        /// magicality <number>
+        /// magicality is expressed as a numeric integer (u64)
         #[structopt(short, parse(from_occurrences))]
         magicality: u64,
         /// color <string>>
@@ -54,8 +55,8 @@ enum FinishType {
 }
 
 fn main() {
-    let command = Command::from_args();
-    println!("{:?}", command);
+//    let command = Command::from_args();
+//    println!("{:?}", command);
 
     let make_cookie = MakeCookie::from_args();
     println!("{:?}", make_cookie);
