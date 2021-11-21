@@ -56,4 +56,7 @@ enum FinishType {
 fn main() {
     let command = Command::from_args();
     println!("{:?}", command);
+
+    let make_cookie = MakeCookie::from_args();
+    println!("{:?}", make_cookie);
 }
