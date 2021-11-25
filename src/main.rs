@@ -8,7 +8,7 @@ struct Opt {
     /// The faerie tree this cookie is being made in.
     tree: Option<String>,
     #[structopt(subcommand)] // Note that we mark a field as a subcommand
-    sub_cmd: OptSubCmd,
+    sub_cmd: Option<OptSubCmd>,
 }
 
 #[derive(StructOpt, Debug)]
@@ -46,10 +46,11 @@ struct JobSubCmd {
 #[derive(StructOpt, Debug)]
 enum JobCmdType {
     Show {
-        /// <applications> is expressed as an integer number
-        applications: u32,
+        /// <job-id> is expressed as an integer number
+        job_id: u32,
     },
     List {
+        #[structopt(short, long)]
         flavor: String,
         dips: u32,
     }
