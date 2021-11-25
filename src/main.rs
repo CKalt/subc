@@ -1,18 +1,18 @@
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
-struct MakeCookie {
+struct Opt {
     /// set supervising faerie <String>
     #[structopt(name = "supervisor", default_value = "Puck", short = "s", long = "supervisor")]
     supervising_faerie: String,
     /// The faerie tree this cookie is being made in.
     tree: Option<String>,
     #[structopt(subcommand)] // Note that we mark a field as a subcommand
-    cmd: Command,
+    sub_cmd: OptSubCmd,
 }
 
 #[derive(StructOpt, Debug)]
-enum Command {
+enum OptSubCmd {
     /// Pound acorns into flour for cookie dough.
     Pound {
         /// <acorns> is expressed as a numeric integer
@@ -27,37 +27,38 @@ enum Command {
         #[structopt(short)]
         color: String,
     },
-    Finish(Finish),
+    #[structopt(name="job")]
+    JobCmd(JobSubCmd),
 }
 
 // Subcommand can also be externalized by using a 1-uple enum variant
 #[derive(StructOpt, Debug)]
-struct Finish {
+struct JobSubCmd {
     /// <time> is expressed as an integer number
     #[structopt(short)]
     time: u32,
     #[structopt(subcommand)] // Note that we mark a field as a subcommand
-    /// finish_type is a Glaze and a Powder
-    finish_type: FinishType,
+    /// job_cmd_type is a Glaze and a Powder
+    job_cmd_type: JobCmdType,
 }
 
 // subsubcommand!
 #[derive(StructOpt, Debug)]
-enum FinishType {
-    Glaze {
+enum JobCmdType {
+    Show {
         /// <applications> is expressed as an integer number
         applications: u32,
     },
-    Powder {
+    List {
         flavor: String,
         dips: u32,
     }
 }
 
 fn main() {
-//    let command = Command::from_args();
+//    let command = OptSubCmd::from_args();
 //    println!("{:?}", command);
 
-    let make_cookie = MakeCookie::from_args();
-    println!("{:?}", make_cookie);
+    let opt = Opt::from_args();
+    println!("{:?}", opt);
 }
